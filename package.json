@@ -3,14 +3,6 @@
   "version": "1.0.0",
   "description": "Mitch has gone into business!",
   "main": "index.js",
-  "dependencies": {
-    "dotenv": "^8.2.0",
-    "faker": "^4.1.0",
-    "lodash": "^4.17.15",
-    "lodash.random": "^3.2.0",
-    "pg": "^8.0.3",
-    "pg-format": "^1.0.4"
-  },
   "scripts": {
     "setup-dbs": "psql -f db/setup.sql",
     "seed-dev": "node ./db/run-seed.js",
@@ -19,7 +11,10 @@
   "keywords": [],
   "author": "",
   "license": "ISC",
+  "dependencies": {
+    "dotenv": "^16.4.7"
+  },
   "devDependencies": {
-    "jest": "^29.6.2"
+    "pg-format": "^1.0.4"
   }
 }
