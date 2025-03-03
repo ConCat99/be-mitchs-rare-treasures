@@ -12,7 +12,8 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
-    "dotenv": "^16.4.7"
+    "dotenv": "^16.4.7",
+    "node-pg": "^1.0.1"
   },
   "devDependencies": {
     "pg-format": "^1.0.4"
