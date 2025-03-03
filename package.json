@@ -13,9 +13,11 @@
   "license": "ISC",
   "dependencies": {
     "dotenv": "^16.4.7",
-    "node-pg": "^1.0.1"
+    "express": "^4.21.2",
+    "pg": "^8.13.3"
   },
   "devDependencies": {
+    "jest": "^29.7.0",
     "pg-format": "^1.0.4"
   }
 }
