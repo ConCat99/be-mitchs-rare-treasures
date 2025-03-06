@@ -69,7 +69,7 @@ describe('GET: /api/treasures', () => {
 });
 
 xdescribe('GET: /api/treasures/:treasure_id', () => {
-	test('200: Responds with the correct treasure that is linked to the endpoint', () => {
+	test('200:  Responds with the correct individual treasure of that ID .', () => {
 		// return request(app)
 		//   .get(/api/treasures/3)
 	});
