@@ -57,7 +57,7 @@ describe('GET: /api/treasures', () => {
 				);
 			});
 	});
-	test.only('200: responds with treasures ordered by ascending', () => {
+	test('200: responds with treasures ordered by ascending', () => {
 		return request(app)
 			.get('/api/treasures')
 			.expect(200)
@@ -68,10 +68,15 @@ describe('GET: /api/treasures', () => {
 	});
 });
 
-xdescribe('GET: /api/treasures/:treasure_id', () => {
+describe('GET: /api/treasures/:treasure_id', () => {
 	test('200:  Responds with the correct individual treasure of that ID .', () => {
-		// return request(app)
-		//   .get(/api/treasures/3)
+		return request(app)
+		  .get("/api/treasures/3")
+		  .expect(200)
+		  .then(({body})=>{
+            const treasure = body.treasure
+			expect(treasure.treasure_id).toBe(3);
+		  })
 	});
 	test('id is not a number', () => {
 		// send a request where the id is not a number

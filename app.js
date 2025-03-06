@@ -1,9 +1,10 @@
 const express = require('express');
-const { getTreasures } = require('./controllers/treasures.controllers');
+const { getTreasures, getTreasuresById } = require('./controllers/treasures.controllers');
 
 const app = express();
 
 app.get('/api/treasures', getTreasures);
+app.get('/api/treasures/:id', getTreasuresById)
 
 // after the first test has been written - define the path, controller and model....
 // console.log everything!!!
@@ -16,5 +17,6 @@ app.use((err, req, res, next) => {
   console.log(err);
   res.status(500).send({ msg: 'internal server error' });
 });
+
 
 module.exports = app;

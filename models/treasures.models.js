@@ -13,3 +13,12 @@ exports.selectTreasures = () => {
 			return rows;
 		});
 };
+exports.selectTreasuresById =(treasure_id)=>{
+
+	return db.query(`SELECT * FROM treasures WHERE treasure_id = $1`, [treasure_id] )
+	.then(({rows})=>{
+		return rows[0]
+
+	})
+	console.log("invoke model")
+}
