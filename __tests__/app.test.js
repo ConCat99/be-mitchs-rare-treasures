@@ -12,25 +12,6 @@ afterAll(() => {
 	return db.end();
 });
 
-// GET /api/treasures
-// Create an endpoint that responds with all treasures, including the shop name and details, to allow Mitch to view all the treasures currently available.
-// default sort criteria: age
-// default sort order: ascending
-// /api/treasures, first result should be the youngest (default)
-
-{
-	treasures: [
-		{
-			// treasure_id
-			// treasure_name
-			// colour
-			// age
-			// cost_at_auction
-			// shop_name
-		},
-	];
-}
-
 describe('GET: /api/treasures', () => {
 	test('200: responds with all treasures, including the shop name and details', () => {
 		return request(app)
@@ -59,7 +40,7 @@ describe('GET: /api/treasures', () => {
 	});
 	test('200: responds with treasures ordered by ascending', () => {
 		return request(app)
-			.get('/api/treasures')
+			.get('/api/treasures?sort_by=age')
 			.expect(200)
 			.then(({ body }) => {
 				const treasuresCopy = [...body.treasures].sort((a, b) => a.age - b.age);
@@ -71,17 +52,54 @@ describe('GET: /api/treasures', () => {
 describe('GET: /api/treasures/:treasure_id', () => {
 	test('200:  Responds with the correct individual treasure of that ID .', () => {
 		return request(app)
-		  .get("/api/treasures/3")
-		  .expect(200)
-		  .then(({body})=>{
-            const treasure = body.treasure
-			expect(treasure.treasure_id).toBe(3);
-		  })
+			.get('/api/treasures/3')
+			.expect(200)
+			.then(({ body }) => {
+				const treasure = body.treasure;
+				expect(treasure.treasure_id).toBe(3);
+			});
 	});
-	test('id is not a number', () => {
-		// send a request where the id is not a number
+});
+
+describe.only('GET: /api/treasures?sort_by', () => {
+	test('200: Respond with a list of treasures cheapest first and therefore in the ascending order ', () => {
+		return request(app)
+			.get('/api/treasures?sort_by=cost_at_auction')
+			.expect(200)
+			.then(({ body }) => {
+				expect(body.treasures.length).toBe(26);
+				const treasuresCopy = [...body.treasures].sort(
+					(a, b) => a.cost_at_auction - b.cost_at_auction
+				);
+				expect(body.treasures).toEqual(treasuresCopy);
+			});
 	});
-	test('request a resource that doesnt exist', () => {
-		// maybe request treasure 99
+	test('400: Respond with error when the sort by criteria is not permitted', () => {
+		return request(app)
+			.get('/api/treasures?sort_by=sausage')
+			.expect(400)
+			.then(({ body }) => {
+				expect(body.message).toBe('Invalid sort_by input ');
+			});
+	});
+});
+
+describe('Error Handling block', () => {
+	test('400: Responds with bad request message if request parameter is invalid', () => {
+		return request(app)
+			.get('/api/treasures/sausage')
+			.expect(400)
+			.then(({ body }) => {
+				expect(body.msg).toBe('Bad Request');
+			});
+	});
+
+	xtest('404: Responds with not found error if endpoint does not exist', () => {
+		return request(app)
+			.get('/api/treasures/99')
+			.expect(404)
+			.then(({ body }) => {
+				expect(body.msg).toBe('Not Found');
+			});
 	});
 });
